@@ -1,4 +1,4 @@
-CXF WebService Proxy example
+CXF WebService 3Scale plugin  example
 ============================
 
 An example which proxies a real web service by a Camel application using the camel-cxf component
@@ -42,14 +42,27 @@ Then make SOAP requests of this format:
    </soapenv:Body>
 </soapenv:Envelope>
 
-This example is documented at
-  http://camel.apache.org/cxf-proxy-example.html
+The dependency for 3Scale plugin:
 
-If you hit any problems please let us know on the Camel Forums
-  http://camel.apache.org/discussion-forums.html
+<dependency>
+    <groupId>net.3scale</groupId>
+    <artifactId>3scale-api</artifactId>
+    <version>3.0.4</version>
+</dependency>
 
-Please help us make Apache Camel better - we appreciate any feedback you may
-have.  Enjoy!
+The code to authenticate and authorize against API Manger is on the org.apache.camel.example.cxf.proxy.APICastBean class
+The original example is on https://github.com/3scale/3scale_ws_api_for_java.git
 
-------------------------
-The Camel Riders!
+If the authentication is donde succesful you should see the output 
+
+Body is instance of java.io.InputStream]]
+AuthRep on App Id Success: true
+Plan: Basic
+2017-08-25 07:28:47,442 [tp1591616468-31] INFO  input                          - Exchange[ExchangePattern: InOut, BodyType: null, Body: [Body is instance of java.io.InputStream]]
+Incident was 3, changed to 456
+
+
+
+Invoked real web service: id=456 by Myriam Fentanes
+
+
