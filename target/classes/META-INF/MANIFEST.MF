@@ -1,3 +1,21 @@
 Manifest-Version: 1.0
-Class-Path: 
-
+Bnd-LastModified: 1504039067319
+Build-Jdk: 1.8.0_65
+Built-By: mfentane
+Bundle-Description: An example which uses Camel to proxy a web service a
+ nd report back to 3Scale API Manager
+Bundle-ManifestVersion: 2
+Bundle-Name: Camel Spring Example with a CXF and APICast [cxf]-apicast
+Bundle-SymbolicName: cxf-apicast
+Bundle-Version: 2.15.1.redhat-620133
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.apache.camel.example.cxf.proxy;uses:="org.apache.cam
+ el.example.reportincident,org.w3c.dom";version="2.15.1",org.apache.came
+ l.example.reportincident;uses:="javax.jws,javax.jws.soap,javax.xml.bind
+ .annotation,javax.xml.namespace,javax.xml.ws";version="2.15.1"
+Import-Package: javax.jws,javax.jws.soap,javax.xml.bind.annotation,javax
+ .xml.namespace,javax.xml.ws,org.apache.camel.example.reportincident,org
+ .apache.camel.spring;version="[2.15,3)",org.w3c.dom,threescale.v3.api,t
+ hreescale.v3.api.impl
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Tool: Bnd-3.2.0.201605172007
