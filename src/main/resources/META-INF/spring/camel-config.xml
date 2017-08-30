@@ -20,15 +20,25 @@
 	<!-- bean that enriches the SOAP request -->
 	<bean class="org.apache.camel.example.cxf.proxy.EnrichBean" id="enrichBean" />
 	<bean class="org.apache.camel.example.cxf.proxy.APICastBean" id="apiCastBean">
-		<property name="appID" value="75c223c8" />
-		<property name="appKey" value="df292e8ba1cb94012579d6fc34857348" />
-		<property name="serviceToken" value="da523f1bcd613d64f7750fdabca3676852085a3ebf557be6345c4178824cb7d5" />
-		<property name="serviceID" value="2555417746568" />
+		<property name="appID" value="d100fa1" />
+		<property name="appKey" value="13f7a48182abbf3e062eb32ca50a68c" />
+		<property name="serviceToken" value="5398a191b858df79eb38c5ff4ba756bf42360c51c4307a16e583b793f7cd7d9" />
+		<property name="serviceID" value="2555417747600" />
 	</bean>
 	<!-- this is the CXF web service we use as the front end -->
 	<cxf:cxfEndpoint
 		address="http://localhost:${proxy.port}/camel-example-cxf-proxy/webservices/incident"
-		endpointName="s:ReportIncidentEndpoint" id="reportIncident"
+		endpointName="s:ReportIncidentEndpoint1" id="reportIncident1"
+		serviceName="s:ReportIncidentEndpointService" wsdlURL="etc/report_incident.wsdl"
+		xmlns:s="http://reportincident.example.camel.apache.org" />
+		<cxf:cxfEndpoint
+		address="http://localhost:${proxy.port}/camel-example-cxf-proxy/webservices/incident"
+		endpointName="s:ReportIncidentEndpoint2" id="reportIncident2"
+		serviceName="s:ReportIncidentEndpointService" wsdlURL="etc/report_incident.wsdl"
+		xmlns:s="http://reportincident.example.camel.apache.org" />
+		<cxf:cxfEndpoint
+		address="http://localhost:${proxy.port}/camel-example-cxf-proxy/webservices/incident"
+		endpointName="s:ReportIncidentEndpoint3" id="reportIncident3"
 		serviceName="s:ReportIncidentEndpointService" wsdlURL="etc/report_incident.wsdl"
 		xmlns:s="http://reportincident.example.camel.apache.org" />
 	<!-- this is the Camel route which proxies the real web service and forwards 
