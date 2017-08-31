@@ -131,6 +131,7 @@
 				<simple>{"result":"Ping Successfull","timeStamp":"08/25/2017 7:31:31 PM UTC"}</simple>
 			</setBody>
 			<to id="log_input" uri="log:input" />
+			<!-- <to id="call_WCF_real_NTLM" uri="http://localhost:8080/wcf/nlgapimpoc/api/ping?restletMethod=GET&amp;authMethod=NTLM&amp;authDomain=xxxx&amp;authHost=xxxxx&amp;authUsername=xxxxx&amp;authPassword=xxxxx"  -->
 		</route>
 
 	</camelContext>
