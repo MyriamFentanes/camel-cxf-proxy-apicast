@@ -9,14 +9,14 @@
   <name>CXF :: Proxy :: 3Scale Gateway</name>
   <description>An example which uses Camel to proxy a web service and report back to 3Scale API Manager</description>
   <properties>
-    <jboss.fuse.bom.version>6.2.1.redhat-084</jboss.fuse.bom.version>
+    <jboss.fuse.bom.version>6.3.0.redhat-187</jboss.fuse.bom.version>
     <cxf-version>3.0.2</cxf-version>
     <version.maven-bundle-plugin>3.2.0</version.maven-bundle-plugin>
     <camel.osgi.export.pkg>org.apache.camel.example.*</camel.osgi.export.pkg>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <camel.version>2.18.1.redhat-000015</camel.version>
     <camel.osgi.dynamic>*</camel.osgi.dynamic>
+    <camel.version>2.17.0.redhat-630187</camel.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <skipTests>true</skipTests>
     <version.maven-surefire-plugin>2.19.1</version.maven-surefire-plugin>
@@ -37,8 +37,20 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-olingo2</artifactId>
-      <version>${camel.version}</version>
+      <artifactId>camel-restlet</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.restlet.jee</groupId>
+      <artifactId>org.restlet.ext.spring</artifactId>
+      <version>2.3.8</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-cxf</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-velocity</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
@@ -91,8 +103,33 @@
       <artifactId>camel-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-ws-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+    </dependency>
   </dependencies>
   <repositories>
+    <repository>
+      <id>maven-restlet</id>
+      <name>Public online Restlet repository</name>
+      <url>http://maven.restlet.org</url>
+    </repository>
     <repository>
       <id>redhat-ga-repository</id>
       <url>https://maven.repository.redhat.com/ga</url>
@@ -106,6 +143,28 @@
   </pluginRepositories>
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-codegen-plugin</artifactId>
+        <version>3.1.5.redhat-630133</version>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>wsdl2java</goal>
+            </goals>
+            <configuration>
+              <sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+              <wsdlOptions>
+                <wsdlOption>
+                  <wsdl>${basedir}/src/main/resources/etc/inquireSingle.wsdl</wsdl>
+                </wsdlOption>
+              </wsdlOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-codegen-plugin</artifactId>
@@ -143,7 +202,8 @@
         <configuration>
           <instructions>
             <Bundle-SymbolicName>cxf-apicast</Bundle-SymbolicName>
-            <Bundle-Name>Camel Spring Example with a CXF and APICast [cxf]-apicast</Bundle-Name>
+            <Bundle-Name>Camel Spring Example with a CXF and APICast
+							[cxf]-apicast</Bundle-Name>
           </instructions>
         </configuration>
       </plugin>

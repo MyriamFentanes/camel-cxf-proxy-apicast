@@ -1,0 +1,390 @@
+<?xml version="1.0" ?>
+<definitions targetNamespace="http://www.DFH0XCMN.DFH0XCP4.com" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:reqns="http://www.DFH0XCMN.DFH0XCP4.Request.com" xmlns:resns="http://www.DFH0XCMN.DFH0XCP4.Response.com" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.DFH0XCMN.DFH0XCP4.com">
+   <types>
+      <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://www.DFH0XCMN.DFH0XCP4.Request.com" xmlns:tns="http://www.DFH0XCMN.DFH0XCP4.Request.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:complexType abstract="false" block="#all" final="#all" mixed="false" name="ProgramInterface">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.ibm.com/software/htp/cics/annotations">This schema was generated for use with CICS.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="ca_request_id" nillable="false">
+                  <xsd:simpleType>
+                     <xsd:annotation>
+                        <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:40 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                     </xsd:annotation>
+                     <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="6"/>
+                        <xsd:whiteSpace value="preserve"/>
+                     </xsd:restriction>
+                  </xsd:simpleType>
+               </xsd:element>
+               <xsd:element name="ca_return_code" nillable="false">
+                  <xsd:simpleType>
+                     <xsd:annotation>
+                        <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:40 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                     </xsd:annotation>
+                     <xsd:restriction base="xsd:unsignedShort">
+                        <xsd:maxInclusive value="99"/>
+                        <xsd:minInclusive value="0"/>
+                     </xsd:restriction>
+                  </xsd:simpleType>
+               </xsd:element>
+               <xsd:element name="ca_response_message" nillable="false">
+                  <xsd:simpleType>
+                     <xsd:annotation>
+                        <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:40 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                     </xsd:annotation>
+                     <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="79"/>
+                        <xsd:whiteSpace value="preserve"/>
+                     </xsd:restriction>
+                  </xsd:simpleType>
+               </xsd:element>
+               <xsd:element name="ca_inquire_single" nillable="false">
+                  <xsd:complexType mixed="false">
+                     <xsd:sequence>
+                        <xsd:element name="ca_item_ref_req" nillable="false">
+                           <xsd:simpleType>
+                              <xsd:annotation>
+                                 <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:41 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                              </xsd:annotation>
+                              <xsd:restriction base="xsd:unsignedShort">
+                                 <xsd:maxInclusive value="9999"/>
+                                 <xsd:minInclusive value="0"/>
+                              </xsd:restriction>
+                           </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="filler1" nillable="false">
+                           <xsd:simpleType>
+                              <xsd:annotation>
+                                 <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:41 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                              </xsd:annotation>
+                              <xsd:restriction base="xsd:string">
+                                 <xsd:maxLength value="4"/>
+                                 <xsd:whiteSpace value="preserve"/>
+                              </xsd:restriction>
+                           </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="filler2" nillable="false">
+                           <xsd:simpleType>
+                              <xsd:annotation>
+                                 <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:41 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                              </xsd:annotation>
+                              <xsd:restriction base="xsd:string">
+                                 <xsd:maxLength value="3"/>
+                                 <xsd:whiteSpace value="preserve"/>
+                              </xsd:restriction>
+                           </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="ca_single_item" nillable="false">
+                           <xsd:complexType mixed="false">
+                              <xsd:sequence>
+                                 <xsd:element name="ca_sngl_item_ref" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:42 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:unsignedShort">
+                                          <xsd:maxInclusive value="9999"/>
+                                          <xsd:minInclusive value="0"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                                 <xsd:element name="ca_sngl_description" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:43 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:string">
+                                          <xsd:maxLength value="40"/>
+                                          <xsd:whiteSpace value="preserve"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                                 <xsd:element name="ca_sngl_department" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:45 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:unsignedShort">
+                                          <xsd:maxInclusive value="999"/>
+                                          <xsd:minInclusive value="0"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                                 <xsd:element name="ca_sngl_cost" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:46 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:string">
+                                          <xsd:maxLength value="6"/>
+                                          <xsd:whiteSpace value="preserve"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                                 <xsd:element name="in_sngl_stock" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:48 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:unsignedShort">
+                                          <xsd:maxInclusive value="9999"/>
+                                          <xsd:minInclusive value="0"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                                 <xsd:element name="on_sngl_order" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:50 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:unsignedShort">
+                                          <xsd:maxInclusive value="999"/>
+                                          <xsd:minInclusive value="0"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                              </xsd:sequence>
+                           </xsd:complexType>
+                        </xsd:element>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="DFH0XCMNOperation" nillable="false" type="tns:ProgramInterface"/>
+      </xsd:schema>
+      <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://www.DFH0XCMN.DFH0XCP4.Response.com" xmlns:tns="http://www.DFH0XCMN.DFH0XCP4.Response.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+         <xsd:complexType abstract="false" block="#all" final="#all" mixed="false" name="ProgramInterface">
+            <xsd:annotation>
+               <xsd:documentation source="http://www.ibm.com/software/htp/cics/annotations">This schema was generated for use with CICS.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence>
+               <xsd:element name="ca_request_id" nillable="false">
+                  <xsd:simpleType>
+                     <xsd:annotation>
+                        <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:58 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                     </xsd:annotation>
+                     <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="6"/>
+                        <xsd:whiteSpace value="preserve"/>
+                     </xsd:restriction>
+                  </xsd:simpleType>
+               </xsd:element>
+               <xsd:element name="ca_return_code" nillable="false">
+                  <xsd:simpleType>
+                     <xsd:annotation>
+                        <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:58 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                     </xsd:annotation>
+                     <xsd:restriction base="xsd:unsignedShort">
+                        <xsd:maxInclusive value="99"/>
+                        <xsd:minInclusive value="0"/>
+                     </xsd:restriction>
+                  </xsd:simpleType>
+               </xsd:element>
+               <xsd:element name="ca_response_message" nillable="false">
+                  <xsd:simpleType>
+                     <xsd:annotation>
+                        <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:58 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                     </xsd:annotation>
+                     <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="79"/>
+                        <xsd:whiteSpace value="preserve"/>
+                     </xsd:restriction>
+                  </xsd:simpleType>
+               </xsd:element>
+               <xsd:element name="ca_inquire_single" nillable="false">
+                  <xsd:complexType mixed="false">
+                     <xsd:sequence>
+                        <xsd:element name="ca_item_ref_req" nillable="false">
+                           <xsd:simpleType>
+                              <xsd:annotation>
+                                 <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:58 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                              </xsd:annotation>
+                              <xsd:restriction base="xsd:unsignedShort">
+                                 <xsd:maxInclusive value="9999"/>
+                                 <xsd:minInclusive value="0"/>
+                              </xsd:restriction>
+                           </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="filler1" nillable="false">
+                           <xsd:simpleType>
+                              <xsd:annotation>
+                                 <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:58 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                              </xsd:annotation>
+                              <xsd:restriction base="xsd:string">
+                                 <xsd:maxLength value="4"/>
+                                 <xsd:whiteSpace value="preserve"/>
+                              </xsd:restriction>
+                           </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="filler2" nillable="false">
+                           <xsd:simpleType>
+                              <xsd:annotation>
+                                 <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:58 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                              </xsd:annotation>
+                              <xsd:restriction base="xsd:string">
+                                 <xsd:maxLength value="3"/>
+                                 <xsd:whiteSpace value="preserve"/>
+                              </xsd:restriction>
+                           </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="ca_single_item" nillable="false">
+                           <xsd:complexType mixed="false">
+                              <xsd:sequence>
+                                 <xsd:element name="ca_sngl_item_ref" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:59 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:unsignedShort">
+                                          <xsd:maxInclusive value="9999"/>
+                                          <xsd:minInclusive value="0"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                                 <xsd:element name="ca_sngl_description" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:59 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:string">
+                                          <xsd:maxLength value="40"/>
+                                          <xsd:whiteSpace value="preserve"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                                 <xsd:element name="ca_sngl_department" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:27:59 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:unsignedShort">
+                                          <xsd:maxInclusive value="999"/>
+                                          <xsd:minInclusive value="0"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                                 <xsd:element name="ca_sngl_cost" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:28:00 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:string">
+                                          <xsd:maxLength value="6"/>
+                                          <xsd:whiteSpace value="preserve"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                                 <xsd:element name="in_sngl_stock" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:28:00 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:unsignedShort">
+                                          <xsd:maxInclusive value="9999"/>
+                                          <xsd:minInclusive value="0"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                                 <xsd:element name="on_sngl_order" nillable="false">
+                                    <xsd:simpleType>
+                                       <xsd:annotation>
+                                          <xsd:appinfo source="http://www.ibm.com/software/htp/cics/annotations">#Wed Sep 14 08:28:01 BST 2005
+com.ibm.cics.wsdl.properties.synchronized=false
+</xsd:appinfo>
+                                       </xsd:annotation>
+                                       <xsd:restriction base="xsd:unsignedShort">
+                                          <xsd:maxInclusive value="999"/>
+                                          <xsd:minInclusive value="0"/>
+                                       </xsd:restriction>
+                                    </xsd:simpleType>
+                                 </xsd:element>
+                              </xsd:sequence>
+                           </xsd:complexType>
+                        </xsd:element>
+                     </xsd:sequence>
+                  </xsd:complexType>
+               </xsd:element>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:element name="DFH0XCMNOperationResponse" nillable="false" type="tns:ProgramInterface"/>
+      </xsd:schema>
+   </types>
+   <message name="DFH0XCMNOperationResponse">
+      <part element="resns:DFH0XCMNOperationResponse" name="ResponsePart"/>
+   </message>
+   <message name="DFH0XCMNOperationRequest">
+      <part element="reqns:DFH0XCMNOperation" name="RequestPart"/>
+   </message>
+   <portType name="DFH0XCMNPort">
+      <operation name="DFH0XCMNOperation">
+         <input message="tns:DFH0XCMNOperationRequest" name="DFH0XCMNOperationRequest"/>
+         <output message="tns:DFH0XCMNOperationResponse" name="DFH0XCMNOperationResponse"/>
+      </operation>
+   </portType>
+   <binding name="DFH0XCMNHTTPSoapBinding" type="tns:DFH0XCMNPort">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="DFH0XCMNOperation">
+         <soap:operation soapAction="" style="document"/>
+         <input name="DFH0XCMNOperationRequest">
+            <soap:body parts="RequestPart" use="literal"/>
+         </input>
+         <output name="DFH0XCMNOperationResponse">
+            <soap:body parts="ResponsePart" use="literal"/>
+         </output>
+      </operation>
+   </binding>
+   <service name="DFH0XCMNService">
+      <port binding="tns:DFH0XCMNHTTPSoapBinding" name="DFH0XCMNPort">
+         <soap:address location="http://10.240.200.100:12346/exampleApp/inquireSingle"/>
+      </port>
+   </service>
+</definitions>
