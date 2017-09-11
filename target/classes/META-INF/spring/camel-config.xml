@@ -1,138 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:camel="http://camel.apache.org/schema/spring" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:jaxws="http://cxf.apache.org/jaxws"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd        http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
-	<!-- spring property placeholder, ignore resource not found as the file 
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd        http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+    <!-- spring property placeholder, ignore resource not found as the file 
 		resource is for unit testing -->
-	<context:property-placeholder
-		ignore-resource-not-found="true"
-		location="classpath:incident.properties,file:target/custom.properties" />
-	<!-- Use a bean to start and stop the real web service (is not Camel specific) -->
-	<!-- In a real use-case the real web service would be probably located on 
+    <context:property-placeholder ignore-resource-not-found="true" location="classpath:incident.properties,file:target/custom.properties"/>
+    <!-- Use a bean to start and stop the real web service (is not Camel specific) -->
+    <!-- In a real use-case the real web service would be probably located on 
 		another server but we simulate this in the same JVM -->
-	<bean class="org.apache.camel.example.cxf.proxy.RealWebServiceBean"
-		destroy-method="stop" id="realWebService" init-method="start">
-		<!-- url of the real web service we have proxied -->
-		<property name="url" value="http://0.0.0.0:${real.port}/real-webservice" />
-	</bean>
-	<!-- bean that enriches the SOAP request -->
-	<bean class="org.apache.camel.example.cxf.proxy.EnrichBean" id="enrichBean" />
-	<!-- Bean that interacts with #Scale AMP -->
-	<bean class="org.apache.camel.example.cxf.proxy.APICastBean" id="apiCastBean">
-		<property name="appID" value="75c223c8" />
-		<property name="appKey" value="df292e8ba1cb94012579d6fc34857348" />
-		<property name="serviceToken"
-			value="da523f1bcd613d64f7750fdabca3676852085a3ebf557be6345c4178824cb7d5" />
-		<property name="serviceID" value="2555417746568" />
-	</bean>
-	<!-- CXF Interceptors for Logging and security -->
-	<bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
-
-	<bean id="loggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
-
-	<bean id="wss4jInInterceptor" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
-		<constructor-arg>
-			<map>
-				<entry key="action" value="UsernameToken Timestamp" />
-				<entry key="passwordType" value="PasswordDigest" />
-				<entry key="passwordCallbackClass" value="org.apache.camel.nlg.mainframe.UTPasswordCallback" />
-			</map>
-		</constructor-arg>
-	</bean>
-	<bean id="wss4jOutInterceptor" class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
-		<constructor-arg>
-			<map>
-				<entry key="action" value="UsernameToken Timestamp" />
-				<entry key="passwordType" value="PasswordText" />
-				<entry key="user" value="Alice" />
-				<entry key="passwordCallbackClass" value="org.apache.camel.nlg.mainframe.UTPasswordCallback" />
-			</map>
-		</constructor-arg>
-	</bean>
-	<!-- CXF Interceptors for Logging and security -->
-
-	<cxf:cxfEndpoint address="http://0.0.0.0:1102/real-webservice"
-		endpointName="s:ReportIncidentEndpoint" id="callReportIncident"
-		serviceName="s:ReportIncidentEndpointService" wsdlURL="etc/report_incident.wsdl"
-		xmlns:s="http://reportincident.example.camel.apache.org">
-		<cxf:inInterceptors>
-			<ref bean="loggingInInterceptor" />
-		</cxf:inInterceptors>
-		<cxf:outInterceptors>
-			<ref bean="loggingOutInterceptor" />
-			<ref bean="wss4jOutInterceptor" />
-		</cxf:outInterceptors>
-	</cxf:cxfEndpoint>
-	<cxf:cxfEndpoint
-		address="http://0.0.0.0:${proxy.port}/camel-example-cxf-proxy/webservices/incident"
-		endpointName="s:ReportIncidentEndpoint" id="reportIncident"
-		serviceName="s:ReportIncidentEndpointService" wsdlURL="etc/report_incident.wsdl"
-		xmlns:s="http://reportincident.example.camel.apache.org" />
-	<cxf:cxfEndpoint
-		address="http://0.0.0.0:${proxy.port}/mainframe/webservices/dfhoxcmn"
-		endpointName="s:DFH0XCMNPort" id="dfhoxcmn" serviceName="s:DFH0XCMNService"
-		wsdlURL="etc/inquireSingle.wsdl" xmlns:s="http://www.DFH0XCMN.DFH0XCP4.com">
-		<cxf:inInterceptors>
-			<ref bean="loggingInInterceptor" />
-		</cxf:inInterceptors>
-		<cxf:outInterceptors>
-			<ref bean="loggingOutInterceptor" />
-			<ref bean="wss4jOutInterceptor" />
-		</cxf:outInterceptors>
-	</cxf:cxfEndpoint>
-	<cxf:cxfEndpoint
-		address="http://0.0.0.0:${proxy.port}/mainframe/webservices/dfhoxcmnMock"
-		endpointName="s:DFH0XCMNPort" id="dfhoxcmnMock" serviceName="s:DFH0XCMNService"
-		wsdlURL="etc/inquireSingle.wsdl" xmlns:s="http://www.DFH0XCMN.DFH0XCP4.com">
-		<cxf:inInterceptors>
-			<ref bean="loggingInInterceptor" />
-			<ref bean="wss4jInInterceptor" />
-		</cxf:inInterceptors>
-		<cxf:outInterceptors>
-			<ref bean="loggingOutInterceptor" />
-		</cxf:outInterceptors>
-	</cxf:cxfEndpoint>
-
-	<!-- this is the Camel route which proxies the real web service and forwards 
+    <bean class="org.apache.camel.example.cxf.proxy.RealWebServiceBean"
+        destroy-method="stop" id="realWebService" init-method="start">
+        <!-- url of the real web service we have proxied -->
+        <property name="url" value="http://0.0.0.0:${real.port}/real-webservice"/>
+    </bean>
+    <!-- bean that enriches the SOAP request -->
+    <bean class="org.apache.camel.example.cxf.proxy.EnrichBean" id="enrichBean"/>
+    <!-- Bean that interacts with #Scale AMP -->
+    <bean class="org.apache.camel.example.cxf.proxy.APICastBean" id="apiCastBean">
+        <property name="appID" value="75c223c8"/>
+        <property name="appKey" value="df292e8ba1cb94012579d6fc34857348"/>
+        <property name="serviceToken" value="da523f1bcd613d64f7750fdabca3676852085a3ebf557be6345c4178824cb7d5"/>
+        <property name="serviceID" value="2555417746568"/>
+    </bean>
+    <!-- CXF Interceptors for Logging and security -->
+    <bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" id="loggingOutInterceptor"/>
+    <bean class="org.apache.cxf.interceptor.LoggingInInterceptor" id="loggingInInterceptor"/>
+    <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor" id="wss4jInInterceptor">
+        <constructor-arg>
+            <map>
+                <entry key="action" value="UsernameToken Timestamp"/>
+                <entry key="passwordType" value="PasswordDigest"/>
+                <entry key="passwordCallbackClass" value="org.apache.camel.nlg.mainframe.UTPasswordCallback"/>
+            </map>
+        </constructor-arg>
+    </bean>
+    <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor" id="wss4jInCertsInterceptor">
+        <constructor-arg>
+            <map>
+                <entry key="action" value="Signature"/>
+                <entry key="signaturePropFile" value="server_cert.properties"/>
+            </map>
+        </constructor-arg>
+    </bean>
+    <bean class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor" id="wss4jOutInterceptor">
+        <constructor-arg>
+            <map>
+                <entry key="action" value="UsernameToken Timestamp"/>
+                <entry key="passwordType" value="PasswordText"/>
+                <entry key="user" value="Alice"/>
+                <entry key="passwordCallbackClass" value="org.apache.camel.nlg.mainframe.UTPasswordCallback"/>
+            </map>
+        </constructor-arg>
+    </bean>
+    <bean id="cryptoChecker" class="org.apache.cxf.ws.security.wss4j.DefaultCryptoCoverageChecker"/>
+    <!-- CXF Interceptors for Logging and security -->
+    <cxf:cxfEndpoint address="http://0.0.0.0:1102/real-webservice"
+        endpointName="s:ReportIncidentEndpoint" id="callReportIncident"
+        serviceName="s:ReportIncidentEndpointService"
+        wsdlURL="etc/report_incident.wsdl" xmlns:s="http://reportincident.example.camel.apache.org">
+        <cxf:inInterceptors>
+            <ref bean="loggingInInterceptor"/>
+        </cxf:inInterceptors>
+        <cxf:outInterceptors>
+            <ref bean="loggingOutInterceptor"/>
+            <ref bean="wss4jOutInterceptor"/>
+        </cxf:outInterceptors>
+    </cxf:cxfEndpoint>
+    <cxf:cxfEndpoint
+        address="http://0.0.0.0:${proxy.port}/camel-example-cxf-proxy/webservices/incident"
+        endpointName="s:ReportIncidentEndpoint" id="reportIncident"
+        serviceName="s:ReportIncidentEndpointService"
+        wsdlURL="etc/report_incident.wsdl" xmlns:s="http://reportincident.example.camel.apache.org">
+        <cxf:inInterceptors>
+            <ref bean="loggingInInterceptor"/>
+           <ref bean="wss4jInCertsInterceptor"/>
+        </cxf:inInterceptors>
+    </cxf:cxfEndpoint>
+    <cxf:cxfEndpoint
+        address="http://0.0.0.0:${proxy.port.mainframe}/mainframe/webservices/dfhoxcmn"
+        endpointName="s:DFH0XCMNPort" id="dfhoxcmn"
+        serviceName="s:DFH0XCMNService" wsdlURL="etc/inquireSingle.wsdl" xmlns:s="http://www.DFH0XCMN.DFH0XCP4.com">
+        <cxf:inInterceptors>
+            <ref bean="loggingInInterceptor"/>
+        </cxf:inInterceptors>
+        <cxf:outInterceptors>
+            <ref bean="loggingOutInterceptor"/>
+            <ref bean="wss4jOutInterceptor"/>
+        </cxf:outInterceptors>
+    </cxf:cxfEndpoint>
+    <cxf:cxfEndpoint
+        address="http://0.0.0.0:${proxy.port.mainframe.mock}/mainframe/webservices/dfhoxcmnMock"
+        endpointName="s:DFH0XCMNPort" id="dfhoxcmnMock"
+        serviceName="s:DFH0XCMNService" wsdlURL="etc/inquireSingle.wsdl" xmlns:s="http://www.DFH0XCMN.DFH0XCP4.com">
+        <cxf:inInterceptors>
+            <ref bean="loggingInInterceptor"/>
+            <ref bean="wss4jInInterceptor"/>
+        </cxf:inInterceptors>
+        <cxf:outInterceptors>
+            <ref bean="loggingOutInterceptor"/>
+        </cxf:outInterceptors>
+    </cxf:cxfEndpoint>
+    <!-- this is the Camel route which proxies the real web service and forwards 
 		SOAP requests to it -->
-	<camelContext id="cxf-proxy" xmlns="http://camel.apache.org/schema/spring">
-		<!-- property which contains port number -->
-		<propertyPlaceholder id="properties"
-			location="classpath:incident.properties,file:target/custom.properties" />
-		<endpoint id="callRealWebService"
-			uri="http://localhost:${real.port}/real-webservice?throwExceptionOnFailure=false" />
-		<route id="standard_proxy">
-			<!-- APICast plugin for authorization -->
-			<from id="soap_endpoint" uri="cxf:bean:reportIncident?dataFormat=CXF_MESSAGE" />
-			<!-- enrich the input by ensure the incidentId parameter is set -->
-			<to id="api_filter" uri="bean:apiCastBean?method=process" />
-			<to id="_to1" uri="log:input" />
-			<to id="manipulate_message" uri="bean:enrichBean" />
-			<removeHeaders id="_removeHeaders1" pattern="CamelHttp*" />
-			<to id="call_backend" uri="callRealWebService" />
-			<to id="_to4" uri="log:output" />
-		</route>
-		<route id="secure_call_mainframe_endpoint">
-			<from uri="file:///tmp/data" />
-			<to id="first_log" uri="log:input" />
-			<to id="call_mainframe_service" uri="cxf:bean:dfhoxcmn?dataFormat=CXF_MESSAGE" />
-		</route>
-
-		<route id="mainframe_mock_secured_endpoint">
-			<from uri="cxf:bean:dfhoxcmnMock?dataFormat=CXF_MESSAGE" />
-			<to id="log_in" uri="log:input" />
-		</route>
-		<route id="B2B_endpoint">
-			<from
-				uri="restlet:http://localhost:8080/wcf/nlgapimpoc/api/ping?restletMethod=GET" />
-			<setBody>
-				<simple>{"result":"Ping Successfull","timeStamp":"08/25/2017 7:31:31 PM UTC"}</simple>
-			</setBody>
-			<to id="log_input" uri="log:input" />
-			<!-- <to id="call_WCF_real_NTLM" uri="http://localhost:8080/wcf/nlgapimpoc/api/ping?restletMethod=GET&amp;authMethod=NTLM&amp;authDomain=xxxx&amp;authHost=xxxxx&amp;authUsername=xxxxx&amp;authPassword=xxxxx"  -->
-		</route>
-
-	</camelContext>
+    <camelContext id="cxf-proxy" xmlns="http://camel.apache.org/schema/spring">
+        <!-- property which contains port number -->
+        <propertyPlaceholder id="properties" location="classpath:incident.properties,file:target/custom.properties"/>
+        <endpoint id="callRealWebService" uri="http://localhost:${real.port}/real-webservice?throwExceptionOnFailure=false"/>
+        <route id="B2B_endpoint">
+            <from id="soap_endpoint" uri="cxf:bean:reportIncident?dataFormat=MESSAGE"/>
+           <!--  <to id="api_filter" uri="bean:apiCastBean?method=process"/> -->
+            <to id="_to1" uri="log:input"/>
+            <to id="manipulate_message" uri="bean:enrichBean"/>
+            <removeHeaders id="_removeHeaders1" pattern="CamelHttp*"/>
+            <to id="call_backend" uri="http://0.0.0.0:11080/wcf/nlgapimpoc/api/ping?restletMethod=GET"/>
+            <to id="_to4" uri="log:output"/>
+        </route>
+        <route id="secure_call_mainframe_endpoint">
+            <from id="_from1" uri="file:///tmp/data"/>
+            <to id="first_log" uri="log:input"/>
+            <to id="call_mainframe_service" uri="cxf:bean:dfhoxcmn?dataFormat=CXF_MESSAGE"/>
+        </route>
+        <route id="mainframe_mock_secured_endpoint">
+            <from id="_from2" uri="cxf:bean:dfhoxcmnMock?dataFormat=CXF_MESSAGE"/>
+            <to id="log_in" uri="log:input"/>
+        </route>
+        <route id="WCF_endpoint">
+            <from id="_from3" uri="restlet:http://0.0.0.0:11080/wcf/nlgapimpoc/api/ping?restletMethod=GET"/>
+            <setBody id="_setBody1">
+                <simple>{"result":"Ping Successfull","timeStamp":"08/25/2017 7:31:31 PM UTC"}</simple>
+            </setBody>
+            <to id="log_input" uri="log:input"/>
+            <!-- <to id="call_WCF_real_NTLM" uri="http://localhost:8080/wcf/nlgapimpoc/api/ping?restletMethod=GET&amp;authMethod=NTLM&amp;authDomain=xxxx&amp;authHost=xxxxx&amp;authUsername=xxxxx&amp;authPassword=xxxxx"  -->
+        </route>
+    </camelContext>
 </beans>
