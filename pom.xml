@@ -105,11 +105,23 @@
           <id>jboss-earlyaccess-repository</id>
           <url>http://maven.repository.redhat.com/earlyaccess/all/</url>
     </repository>
+    <repository>
+          <releases/>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <id>fusesource</id>
+          <url>http://repo.fusesource.com/nexus/content/groups/public/</url>
+        </repository>
   </repositories>
   <pluginRepositories>
     <pluginRepository>
       <id>redhat-ga-repository</id>
       <url>https://maven.repository.redhat.com/ga</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>redhat-earlyaccess-repository</id>
+      <url>http://maven.repository.redhat.com/earlyaccess/all/</url>
     </pluginRepository>
     
   </pluginRepositories>
