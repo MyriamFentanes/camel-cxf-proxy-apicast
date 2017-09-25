@@ -25,7 +25,7 @@ The dependency for 3Scale plugin:
 </dependency>
 
 When installed on Fuse you will need to also install the jar :
-nom-1.2.10.jarÿ
+nom-1.2.10.jar
 
 Run
 
