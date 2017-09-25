@@ -6,7 +6,7 @@ An example which proxies a real web service by a Camel application using the cam
 You will need to compile this example first:
   mvn compile
 
-To run the example type:
+To run the example in standalone mode type:
   mvn camel:run
 
 The proxied webservice is located at
@@ -41,6 +41,11 @@ Then make SOAP requests of this format:
       </rep:inputReportIncident>
    </soapenv:Body>
 </soapenv:Envelope>
+
+
+When you run the example in standalone mode as the camel contaxt start you will see in the console the actual port where the SOAP web service endpoint was started:
+
+
 
 The dependency for 3Scale plugin:
 
