@@ -49,8 +49,7 @@ The webservice WSDL is exposed at:
 Because we use dynamic port numbers, you have to check the console to get the used one. You will see a message like the following:
 
 {http://reportincident.example.camel.apache.org}ReportIncidentEndpointService from WSDL: etc/report_incident.wsdl
-2017-09-22 13:59:50,718 [ing.Main.main()] INFO ÿServerImpl- Setting the server's publish address to be http://localhost:1101/camel-example-cxf-proxy/webservices/incident
-2017-09-22 13:59:50,718 [ing.Main.main()] INFO ÿRAWDataFormatFeature- removing the interceptor org.apache.cxf.interceptor.OneWayProcessorInterceptor@46e6cb9
+2017-09-22 13:59:50,718 [ing.Main.main()] INFO ServerImpl- Setting the server's publish address to be http://localhost:1101/camel-example-cxf-proxy/webservices/incident
  
 To stop the example hit ctrl + c
 
@@ -88,7 +87,7 @@ Then make SOAP requests of this format:
 
 
 
-If the authentication is donde succesful you should see the output 
+If the authentication is done succesful you should see the output 
 
 Body is instance of java.io.InputStream]]
 AuthRep on App Id Success: true
