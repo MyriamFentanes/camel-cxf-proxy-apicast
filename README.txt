@@ -25,7 +25,7 @@ The dependency for 3Scale plugin:
 </dependency>
 
 When installed on Fuse you will need to also install the jar :
-nom-1.2.10.jarÿ
+nom-1.2.10.jarÃ¿
 
 Run
 
@@ -49,9 +49,9 @@ The webservice WSDL is exposed at:
 Because we use dynamic port numbers, you have to check the console to get the used one. You will see a message like the following:
 
 {http://reportincident.example.camel.apache.org}ReportIncidentEndpointService from WSDL: etc/report_incident.wsdl
-2017-09-22 13:59:50,718 [ing.Main.main()] INFO ÿServerImpl ÿ ÿ ÿ ÿ ÿ ÿ ÿ ÿ ÿ ÿ - Setting the server's publish address to beÿhttp://localhost:1101/camel-example-cxf-proxy/webservices/incident
-2017-09-22 13:59:50,718 [ing.Main.main()] INFO ÿRAWDataFormatFeature ÿ ÿ ÿ ÿ ÿ - removing the interceptor org.apache.cxf.interceptor.OneWayProcessorInterceptor@46e6cb9
-
+2017-09-22 13:59:50,718 [ing.Main.main()] INFO Ã¿ServerImpl- Setting the server's publish address to be http://localhost:1101/camel-example-cxf-proxy/webservices/incident
+2017-09-22 13:59:50,718 [ing.Main.main()] INFO Ã¿RAWDataFormatFeature- removing the interceptor org.apache.cxf.interceptor.OneWayProcessorInterceptor@46e6cb9
+ 
 To stop the example hit ctrl + c
 
 To run it on top of JBoss Fuse
