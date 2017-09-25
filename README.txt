@@ -1,7 +1,35 @@
-CXF WebService 3Scale plugin  example
+CXF WebService 3Scale plugin example
 ============================
+An example that integrates the 3Scale java plugin with a Camel CXF SOAP proxy route. The code to authenticate and authorize against API Manger is on the org.apache.camel.example.cxf.proxy.APICastBean class
 
-An example which proxies a real web service by a Camel application using the camel-cxf component
+The original example is here: https://github.com/3scale/3scale_ws_api_for_java.git
+
+The documentation of the multiple deployment options for 3Scale can be found here: 
+https://support.3scale.net/docs/deployment-options/plugin-setup
+
+The credentials to authorize the API invocation:
+* AppID
+* AppKey
+* serviceToken
+* serviceId
+are defined in src/main/resources/META-INF/spring/camel-config.xml 
+
+Dependecies
+
+The dependency for 3Scale plugin:
+
+<dependency>
+    <groupId>net.3scale</groupId>
+    <artifactId>3scale-api</artifactId>
+    <version>3.0.4</version>
+</dependency>
+
+When installed on Fuse you will need to also install the jar :
+nom-1.2.10.jarÿ
+
+Run
+
+To run it in standalone mode:
 
 You will need to compile this example first:
   mvn compile
@@ -18,9 +46,25 @@ The real webservice is located at
 The webservice WSDL is exposed at:
   http://localhost:<port 1>/camel-example-cxf-proxy/webservices/incident?wsdl
 
-Because we use dynamic port numbers, you have to check the console to get the used one.
+Because we use dynamic port numbers, you have to check the console to get the used one. You will see a message like the following:
+
+{http://reportincident.example.camel.apache.org}ReportIncidentEndpointService from WSDL: etc/report_incident.wsdl
+2017-09-22 13:59:50,718 [ing.Main.main()] INFO ÿServerImpl ÿ ÿ ÿ ÿ ÿ ÿ ÿ ÿ ÿ ÿ - Setting the server's publish address to beÿhttp://localhost:1101/camel-example-cxf-proxy/webservices/incident
+2017-09-22 13:59:50,718 [ing.Main.main()] INFO ÿRAWDataFormatFeature ÿ ÿ ÿ ÿ ÿ - removing the interceptor org.apache.cxf.interceptor.OneWayProcessorInterceptor@46e6cb9
+
 To stop the example hit ctrl + c
 
+To run it on top of JBoss Fuse
+
+Install the bundle and the dependencies either using Fabric profiles:
+
+mvn:org.apache.camel/cxf-proxy-embedded-apicast/2.15.1.redhat-620133
+
+Or on a standalone Fuse instance
+Osgi:install org.apache.camel/cxf-proxy-embedded-apicast/2.15.1.redhat-620133
+The ports used when the route is installed on Fuse are defined in the incidents.properties file in the resources folder 
+
+Test
 To make a SOAP call open soapUI or another SOAP query tool and create a new
 project w/WSDL of http://localhost:<port 1>/camel-example-cxf-proxy/webservices/incident?wsdl.
 Then make SOAP requests of this format:
@@ -43,20 +87,6 @@ Then make SOAP requests of this format:
 </soapenv:Envelope>
 
 
-When you run the example in standalone mode as the camel contaxt start you will see in the console the actual port where the SOAP web service endpoint was started:
-
-
-
-The dependency for 3Scale plugin:
-
-<dependency>
-    <groupId>net.3scale</groupId>
-    <artifactId>3scale-api</artifactId>
-    <version>3.0.4</version>
-</dependency>
-
-The code to authenticate and authorize against API Manger is on the org.apache.camel.example.cxf.proxy.APICastBean class
-The original example is on https://github.com/3scale/3scale_ws_api_for_java.git
 
 If the authentication is donde succesful you should see the output 
 
