@@ -87,7 +87,7 @@ Then make SOAP requests of this format:
 
 
 
-If the authentication is done succesful you should see the output 
+If the authentication is succesful you should see the output 
 
 Body is instance of java.io.InputStream]]
 AuthRep on App Id Success: true
