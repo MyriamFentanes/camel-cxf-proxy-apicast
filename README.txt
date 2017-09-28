@@ -73,13 +73,13 @@ Then make SOAP requests of this format:
    <soapenv:Header/>
    <soapenv:Body>
       <rep:inputReportIncident>
-         <incidentId></incidentId>
+         <incidentId>3</incidentId>
          <incidentDate>2011-11-18</incidentDate>
-         <givenName>Bob</givenName>
-         <familyName>Smith</familyName>
+         <givenName>Myriam</givenName>
+         <familyName>Fentanes</familyName>
          <summary>Bla bla</summary>
          <details>More bla</details>
-         <email>davsclaus@apache.org</email>
+         <email>mail@apache.org</email>
          <phone>12345678</phone>
       </rep:inputReportIncident>
    </soapenv:Body>
