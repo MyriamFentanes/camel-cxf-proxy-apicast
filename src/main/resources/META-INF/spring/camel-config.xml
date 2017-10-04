@@ -1,54 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:camel="http://camel.apache.org/schema/spring" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:cxf="http://camel.apache.org/schema/cxf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd        http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd">
-	<!-- spring property placeholder, ignore resource not found as the file 
+    xmlns:camel="http://camel.apache.org/schema/spring"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd        http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+    <!-- spring property placeholder, ignore resource not found as the file 
 		resource is for unit testing -->
-	<context:property-placeholder
-		ignore-resource-not-found="true"
-		location="classpath:incident.properties,file:target/custom.properties" />
-	<!-- Use a bean to start and stop the real web service (is not Camel specific) -->
-	<!-- In a real use-case the real web service would be probably located on 
+    <context:property-placeholder
+        ignore-resource-not-found="true" location="classpath:incident.properties,file:target/custom.properties"/>
+    <!-- Use a bean to start and stop the real web service (is not Camel specific) -->
+    <!-- In a real use-case the real web service would be probably located on 
 		another server but we simulate this in the same JVM -->
-	<bean class="org.apache.camel.example.cxf.proxy.RealWebServiceBean"
-		destroy-method="stop" id="realWebService" init-method="start">
-		<!-- url of the real web service we have proxied -->
-		<property name="url"
-			value="http://localhost:${real.port}/real-webservice" />
-	</bean>
-	<!-- bean that enriches the SOAP request -->
-	<bean class="org.apache.camel.example.cxf.proxy.EnrichBean" id="enrichBean" />
-	<bean class="org.apache.camel.example.cxf.proxy.APICastBean" id="apiCastBean">
-		<property name="appID" value="75c223c8" />
-		<property name="appKey" value="df292e8ba1cb94012579d6fc34857348" />
-		<property name="serviceToken" value="da523f1bcd613d64f7750fdabca3676852085a3ebf557be6345c4178824cb7d5" />
-		<property name="serviceID" value="2555417746568" />
-	</bean>
-	<!-- this is the CXF web service we use as the front end -->
-	<cxf:cxfEndpoint
-		address="http://localhost:${proxy.port}/camel-example-cxf-proxy/webservices/incident"
-		endpointName="s:ReportIncidentEndpoint" id="reportIncident"
-		serviceName="s:ReportIncidentEndpointService" wsdlURL="etc/report_incident.wsdl"
-		xmlns:s="http://reportincident.example.camel.apache.org" />
-	<!-- this is the Camel route which proxies the real web service and forwards 
+    <bean class="org.apache.camel.example.cxf.proxy.RealWebServiceBean"
+        destroy-method="stop" id="realWebService" init-method="start">
+        <!-- url of the real web service we have proxied -->
+        <property name="url" value="http://localhost:${real.port}/real-webservice"/>
+    </bean>
+    <!-- bean that enriches the SOAP request -->
+    <bean class="org.apache.camel.example.cxf.proxy.EnrichBean" id="enrichBean"/>
+    <bean class="org.apache.camel.example.cxf.proxy.APICastBean" id="apiCastBean">
+        <property name="appID" value="75c223c8"/>
+        <property name="appKey" value="df292e8ba1cb94012579d6fc34857348"/>
+        <property name="serviceToken" value="da523f1bcd613d64f7750fdabca3676852085a3ebf557be6345c4178824cb7d5"/>
+        <property name="serviceID" value="2555417746568"/>
+    </bean>
+    <!-- this is the CXF web service we use as the front end -->
+    <cxf:cxfEndpoint
+        address="http://localhost:${proxy.port}/camel-example-cxf-proxy/webservices/incident"
+        endpointName="s:ReportIncidentEndpoint" id="reportIncident"
+        serviceName="s:ReportIncidentEndpointService"
+        wsdlURL="etc/report_incident.wsdl" xmlns:s="http://reportincident.example.camel.apache.org"/>
+    <!-- this is the Camel route which proxies the real web service and forwards 
 		SOAP requests to it -->
-	<camelContext id="cxf-proxy" xmlns="http://camel.apache.org/schema/spring">
-		<!-- property which contains port number -->
-		<propertyPlaceholder id="properties"
-			location="classpath:incident.properties,file:target/custom.properties" />
-		<endpoint id="callRealWebService"
-			uri="http://localhost:${real.port}/real-webservice?throwExceptionOnFailure=false" />
-		<route id="soap_proxy">
-			<!-- APICast plugin for authorization -->
-			<from id="_from1" uri="cxf:bean:reportIncident?dataFormat=MESSAGE" />
-			<to id="api_filter" uri="bean:apiCastBean?method=process" />
-			<!-- enrich the input by ensure the incidentId parameter is set -->
-			<to id="_to1" uri="log:input" />
-			<to id="_to2" uri="bean:enrichBean" />
-			<removeHeaders id="_removeHeaders1" pattern="CamelHttp*" />
-			<to id="_to3" uri="callRealWebService" />
-			<to id="_to4" uri="log:output" />
-		</route>
-	</camelContext>
+    <camelContext id="cxf-proxy" xmlns="http://camel.apache.org/schema/spring">
+        <!-- property which contains port number -->
+        <propertyPlaceholder id="properties" location="classpath:incident.properties,file:target/custom.properties"/>
+        <endpoint id="callRealWebService" uri="http://localhost:${real.port}/real-webservice?throwExceptionOnFailure=false"/>
+        <route id="soap_proxy">
+            <!-- APICast plugin for authorization -->
+            <from id="_from1" uri="cxf:bean:reportIncident?dataFormat=MESSAGE"/>
+           <camel:setHeader headerName="apiKey"><simple>changeMe!</simple></camel:setHeader>
+            <!-- enrich the input by ensure the incidentId parameter is set -->
+            <to id="api_filter" uri="bean:apiCastBean?method=process"/>
+            <to id="_to1" uri="log:input"/>
+            <to id="_to2" uri="bean:enrichBean"/>
+            <removeHeaders id="_removeHeaders1" pattern="CamelHttp*"/>
+            <to id="_to3" uri="callRealWebService"/>
+            <to id="_to4" uri="log:output"/>
+        </route>
+    </camelContext>
 </beans>

@@ -1,5 +1,7 @@
 package org.apache.camel.example.cxf.proxy;
 
+import org.apache.camel.Header;
+
 import threescale.v3.api.AuthorizeResponse;
 import threescale.v3.api.ParameterMap;
 import threescale.v3.api.ServerError;
@@ -15,7 +17,7 @@ public class APICastBean {
 	private String serviceID;
 	private String error;
 	
-	public void process()
+	public void process(@Header(value = "apiKey") String apikey)
 	{
 		// When connecting to an on-premise instance of the 3scale platform,
 		// create
@@ -25,12 +27,13 @@ public class APICastBean {
 		// 80, true);
 
 		//TODO Change with the 3Scale account information of your account.
+		System.out.println("The value of the apiKey"+apikey);
 		ParameterMap params = new ParameterMap(); // the parameters of your call
 		params.add("app_id",appID); // Add app_id of your application
 												// for authorization
 		params.add("app_key", appKey); // Add app_key of your
 												// application for authorization
-	
+
 		ParameterMap usage = new ParameterMap(); // Add a metric to the call
 		usage.add("hits", "1");
 		params.add("usage", usage); // metrics belong inside the usage parameter

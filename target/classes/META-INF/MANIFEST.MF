@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1504039067319
+Bnd-LastModified: 1507126324590
 Build-Jdk: 1.8.0_65
 Built-By: mfentane
 Bundle-Description: An example which uses Camel to proxy a web service a
@@ -10,12 +10,13 @@ Bundle-SymbolicName: cxf-apicast
 Bundle-Version: 2.15.1.redhat-620133
 Created-By: Apache Maven Bundle Plugin
 Export-Package: org.apache.camel.example.cxf.proxy;uses:="org.apache.cam
- el.example.reportincident,org.w3c.dom";version="2.15.1",org.apache.came
- l.example.reportincident;uses:="javax.jws,javax.jws.soap,javax.xml.bind
- .annotation,javax.xml.namespace,javax.xml.ws";version="2.15.1"
+ el,org.apache.camel.example.reportincident,org.w3c.dom,threescale.v3.ap
+ i";version="2.15.1",org.apache.camel.example.reportincident;uses:="java
+ x.jws,javax.jws.soap,javax.xml.bind.annotation,javax.xml.namespace,java
+ x.xml.ws";version="2.15.1"
 Import-Package: javax.jws,javax.jws.soap,javax.xml.bind.annotation,javax
- .xml.namespace,javax.xml.ws,org.apache.camel.example.reportincident,org
- .apache.camel.spring;version="[2.15,3)",org.w3c.dom,threescale.v3.api,t
- hreescale.v3.api.impl
+ .xml.namespace,javax.xml.ws,org.apache.camel;version="[2.15,3)",org.apa
+ che.camel.example.reportincident,org.apache.camel.spring;version="[2.15
+ ,3)",org.w3c.dom,threescale.v3.api,threescale.v3.api.impl
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
 Tool: Bnd-3.2.0.201605172007
